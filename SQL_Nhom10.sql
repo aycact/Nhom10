@@ -4,14 +4,14 @@ GO
 USE Nhom10
 GO
 CREATE TABLE NhaCungCap(
-    MaNhaCungCap INT PRIMARY KEY,
+    MaNhaCungCap INT PRIMARY KEY IDENTITY(1,1),
     TenNhaCungCap VARCHAR(250),
     DiaChi TEXT NULL,
     SoDienThoai CHAR(15) DEFAULT NULL
 )
 GO
 CREATE TABLE KhachHang(
-    MaKhachHang INT PRIMARY KEY,
+    MaKhachHang INT PRIMARY KEY IDENTITY(1,1),
     HoKhachHang VARCHAR(50),
     TenKhachHang VARCHAR(50),
     DiaChi TEXT NULL,
@@ -19,7 +19,7 @@ CREATE TABLE KhachHang(
 )
 GO
 CREATE TABLE NhanVien(
-    MaNhanVien INT PRIMARY KEY,
+    MaNhanVien INT PRIMARY KEY IDENTITY(1,1),
     HoNhanVien VARCHAR(50),
     TenNhanVien VARCHAR(50),
     DiaChi TEXT NULL,
@@ -28,7 +28,7 @@ CREATE TABLE NhanVien(
 )
 GO
 CREATE TABLE NhacCu(
-    MaNhacCu INT PRIMARY KEY,
+    MaNhacCu INT PRIMARY KEY IDENTITY(1,1),
     MaNhaCungCap INT,
     TenNhacCu VARCHAR(100),
     LoaiNhacCu VARCHAR(100),
@@ -38,7 +38,7 @@ CREATE TABLE NhacCu(
 )
 GO
 CREATE TABLE HoaDon(
-    MaHoaDon INT PRIMARY KEY,
+    MaHoaDon INT PRIMARY KEY IDENTITY(1,1),
     MaNhanVien INT,
     MaKhachHang INT,
     TongTien INT DEFAULT 0,
@@ -48,7 +48,7 @@ CREATE TABLE HoaDon(
 )
 GO
 CREATE TABLE ChiTietHoaDon(
-    MaChiTietHoaDon INT PRIMARY KEY,
+    MaChiTietHoaDon INT PRIMARY KEY IDENTITY(1,1),
     MaHoaDon INT,
     MaNhacCu INT,
     SoLuong INT DEFAULT 0,
