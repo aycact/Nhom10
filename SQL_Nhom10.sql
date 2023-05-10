@@ -4,41 +4,41 @@ GO
 USE Nhom10
 GO
 CREATE TABLE NhaCungCap(
-    MaNhaCungCap INT PRIMARY KEY IDENTITY(1,1),
-    TenNhaCungCap VARCHAR(250),
+    MaNhaCungCap INT PRIMARY KEY NOT NULL IDENTITY(1,1),
+    TenNhaCungCap VARCHAR(250) NOT NULL,
     DiaChi TEXT NULL,
     SoDienThoai CHAR(15) DEFAULT NULL
 )
 GO
 CREATE TABLE KhachHang(
-    MaKhachHang INT PRIMARY KEY IDENTITY(1,1),
-    HoKhachHang VARCHAR(50),
-    TenKhachHang VARCHAR(50),
+    MaKhachHang INT PRIMARY KEY NOT NULL IDENTITY(1,1),
+    HoKhachHang VARCHAR(50) NULL,
+    TenKhachHang VARCHAR(50) NOT NULL DEFAULT 'Khách vãng lai',
     DiaChi TEXT NULL,
     SoDienThoai CHAR(15) DEFAULT NULL
 )
 GO
 CREATE TABLE NhanVien(
-    MaNhanVien INT PRIMARY KEY IDENTITY(1,1),
-    HoNhanVien VARCHAR(50),
-    TenNhanVien VARCHAR(50),
+    MaNhanVien INT PRIMARY KEY NOT NULL IDENTITY(1,1),
+    HoNhanVien VARCHAR(50) NOT NULL,
+    TenNhanVien VARCHAR(50) NOT NULL,
     DiaChi TEXT NULL,
     SoDienThoai CHAR(15) DEFAULT NULL,
-    ChucVu varchar(20)
+    ChucVu VARCHAR(20)
 )
 GO
 CREATE TABLE NhacCu(
-    MaNhacCu INT PRIMARY KEY IDENTITY(1,1),
+    MaNhacCu INT PRIMARY KEY NOT NULL IDENTITY(1,1),
     MaNhaCungCap INT,
-    TenNhacCu VARCHAR(100),
-    LoaiNhacCu VARCHAR(100),
-    GiaTien INT DEFAULT 0,
+    TenNhacCu VARCHAR(100) NOT NULL,
+    LoaiNhacCu VARCHAR(100) NOT NULL,
+    GiaTien INT DEFAULT 0 NOT NULL,
     SoLuongTonKho INT DEFAULT 0,
     FOREIGN KEY (MaNhaCungCap) REFERENCES NhaCungCap(MaNhaCungCap)
 )
 GO
 CREATE TABLE HoaDon(
-    MaHoaDon INT PRIMARY KEY IDENTITY(1,1),
+    MaHoaDon INT PRIMARY KEY NOT NULL IDENTITY(1,1),
     MaNhanVien INT,
     MaKhachHang INT,
     TongTien INT DEFAULT 0,
@@ -48,7 +48,7 @@ CREATE TABLE HoaDon(
 )
 GO
 CREATE TABLE ChiTietHoaDon(
-    MaChiTietHoaDon INT PRIMARY KEY IDENTITY(1,1),
+    MaChiTietHoaDon INT PRIMARY KEY NOT NULL IDENTITY(1,1),
     MaHoaDon INT,
     MaNhacCu INT,
     SoLuong INT DEFAULT 0,
@@ -58,18 +58,16 @@ CREATE TABLE ChiTietHoaDon(
 )
 GO
 CREATE PROC ThemNhaCungCap(
-    @MaNhaCungCap INT,
     @TenNhaCungCap VARCHAR(250),
     @DiaChi TEXT,
     @SoDienThoai CHAR(15)
 )
 AS
 BEGIN
-    INSERT INTO NhaCungCap VALUES(@MaNhaCungCap, @TenNhaCungCap, @DiaChi, @SoDienThoai)
+    INSERT INTO NhaCungCap(TenNhaCungCap, DiaChi, SoDienThoai) VALUES(@TenNhaCungCap, @DiaChi, @SoDienThoai)
 END
 GO
 CREATE PROC ThemKhachHang(
-    @MaKhachHang INT,
     @HoKhachHang VARCHAR(50),
     @TenKhachHang VARCHAR(50),
     @DiaChi TEXT,
@@ -77,11 +75,10 @@ CREATE PROC ThemKhachHang(
 )
 AS
 BEGIN
-    INSERT INTO KhachHang VALUES(@MaKhachHang, @HoKhachHang, @TenKhachHang, @DiaChi, @SoDienThoai)
+    INSERT INTO KhachHang(HoKhachHang, TenKhachHang, DiaChi, SoDienThoai) VALUES(@HoKhachHang, @TenKhachHang, @DiaChi, @SoDienThoai)
 END
 GO
 CREATE PROC ThemNhanVien(
-    @MaNhanVien INT,
     @HoNhanVien VARCHAR(50),
     @TenNhanVien VARCHAR(50),
     @DiaChi TEXT,
@@ -90,12 +87,10 @@ CREATE PROC ThemNhanVien(
 )
 AS
 BEGIN
-    INSERT INTO NhanVien VALUES(@MaNhanVien, @HoNhanVien, @TenNhanVien, @DiaChi, @SoDienThoai, @ChucVu)
+    INSERT INTO NhanVien(HoNhanVien, TenNhanVien, DiaChi, SoDienThoai, ChucVu) VALUES(@HoNhanVien, @TenNhanVien, @DiaChi, @SoDienThoai, @ChucVu)
 END
 GO
 CREATE PROC ThemNhacCu(
-    @MaNhacCu INT,
-    @MaNhaCungCap INT,
     @TenNhacCu VARCHAR(100),
     @LoaiNhacCu VARCHAR(100),
     @GiaTien INT,
@@ -103,11 +98,10 @@ CREATE PROC ThemNhacCu(
 )
 AS
 BEGIN
-    INSERT INTO NhacCu VALUES(@MaNhacCu, @MaNhaCungCap, @TenNhacCu, @LoaiNhacCu, @GiaTien, @SoLuongTonKho)
+    INSERT INTO NhacCu(TenNhacCu, LoaiNhacCu, GiaTien, SoLuongTonKho) VALUES(@TenNhacCu, @LoaiNhacCu, @GiaTien, @SoLuongTonKho)
 END
 GO
 CREATE PROC ThemHoaDon(
-    @MaHoaDon INT,
     @MaNhanVien INT,
     @MaKhachHang INT,
     @TongTien INT,
@@ -115,11 +109,10 @@ CREATE PROC ThemHoaDon(
 )
 AS
 BEGIN
-    INSERT INTO HoaDon VALUES(@MaHoaDon, @MaNhanVien, @MaKhachHang, @TongTien, @NgayTao)
+    INSERT INTO HoaDon(MaNhanVien, MaKhachHang, TongTien, NgayTao) VALUES(@MaNhanVien, @MaKhachHang, @TongTien, @NgayTao)
 END
 GO
 CREATE PROC ThemChiTietHoaDon(
-    @MaChiTietHoaDon INT,
     @MaHoaDon INT,
     @MaNhacCu INT,
     @SoLuong INT,
@@ -127,7 +120,7 @@ CREATE PROC ThemChiTietHoaDon(
 )
 AS
 BEGIN
-    INSERT INTO ChiTietHoaDon VALUES(@MaChiTietHoaDon, @MaHoaDon, @MaNhacCu, @SoLuong, @DonGia)
+    INSERT INTO ChiTietHoaDon(MaHoaDon, MaNhacCu, SoLuong, DonGia) VALUES(@MaHoaDon, @MaNhacCu, @SoLuong, @DonGia)
 END
 GO
 CREATE PROC XoaNhaCungCap(
