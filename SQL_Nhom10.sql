@@ -457,19 +457,20 @@ AS
 GO
 CREATE VIEW DSNhaCungCap
 AS
-    SELECT * FROM NhaCungCap
+    SELECT TenNhaCungCap AS [Tên nhà cung cấp], DiaChi AS [Địa chỉ], SoDienThoai AS [Số điện thoại] FROM NhaCungCap
 GO
 CREATE VIEW DSThanhVien
 AS
-    SELECT * FROM KhachHang
+    SELECT concat_ws(' ', HoKhachHang, TenKhachHang) AS [Họ và tên], DiaChi AS [Địa chỉ], SoDienThoai AS [SoDienThoai] FROM KhachHang
     WHERE SoDienThoai IS NOT NULL OR DiaChi IS NOT NULL
     WITH CHECK OPTION
 GO
 CREATE VIEW DSNhanVien
 AS
-    SELECT * FROM NhanVien
+    SELECT concat_ws(' ', HoNhanVien, TenNhanVien) AS [Họ và tên], DiaChi AS [Địa chỉ], SoDienThoai AS [Số điện thoại], ChucVu AS [Chức vụ] FROM NhanVien
 GO
 CREATE VIEW DSNhacCu
 AS
-    SELECT * FROM NhacCu
+    SELECT NhacCu.TenNhacCu AS [Tên nhạc cụ], NhaCungCap.TenNhaCungCap AS [Tên nhà cung cấp], NhacCu.LoaiNhacCu AS [Loại nhạc cụ], NhacCu.GiaTien AS [Giá tiền], NhacCu.SoLuongTonKho AS [Số lượng tồn kho]
+    FROM NhacCu INNER JOIN NhaCungCap ON NhacCu.MaNhaCungCap = NhaCungCap.MaNhaCungCap
 GO
