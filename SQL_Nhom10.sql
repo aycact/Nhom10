@@ -5,33 +5,33 @@ USE Nhom10
 GO
 CREATE TABLE NhaCungCap(
     MaNhaCungCap INT PRIMARY KEY NOT NULL IDENTITY(1,1),
-    TenNhaCungCap VARCHAR(250) NOT NULL,
+    TenNhaCungCap NVARCHAR(250) NOT NULL,
     DiaChi TEXT NULL,
     SoDienThoai CHAR(15) DEFAULT NULL
 )
 GO
 CREATE TABLE KhachHang(
     MaKhachHang INT PRIMARY KEY NOT NULL IDENTITY(1,1),
-    HoKhachHang VARCHAR(50) NULL,
-    TenKhachHang VARCHAR(50) NOT NULL DEFAULT 'Khách vãng lai',
+    HoKhachHang NVARCHAR(50) NULL,
+    TenKhachHang NVARCHAR(50) NOT NULL DEFAULT 'Khách vãng lai',
     DiaChi TEXT NULL,
     SoDienThoai CHAR(15) DEFAULT NULL
 )
 GO
 CREATE TABLE NhanVien(
     MaNhanVien INT PRIMARY KEY NOT NULL IDENTITY(1,1),
-    HoNhanVien VARCHAR(50) NOT NULL,
-    TenNhanVien VARCHAR(50) NOT NULL,
+    HoNhanVien NVARCHAR(50) NOT NULL,
+    TenNhanVien NVARCHAR(50) NOT NULL,
     DiaChi TEXT NULL,
     SoDienThoai CHAR(15) DEFAULT NULL,
-    ChucVu VARCHAR(20) NOT NULL
+    ChucVu NVARCHAR(20) NOT NULL
 )
 GO
 CREATE TABLE NhacCu(
     MaNhacCu INT PRIMARY KEY NOT NULL IDENTITY(1,1),
     MaNhaCungCap INT,
-    TenNhacCu VARCHAR(100) NOT NULL,
-    LoaiNhacCu VARCHAR(100) NOT NULL,
+    TenNhacCu NVARCHAR(100) NOT NULL,
+    LoaiNhacCu NVARCHAR(100) NOT NULL,
     GiaTien INT DEFAULT 0 NOT NULL,
     SoLuongTonKho INT DEFAULT 0,
     FOREIGN KEY (MaNhaCungCap) REFERENCES NhaCungCap(MaNhaCungCap)
@@ -58,7 +58,7 @@ CREATE TABLE ChiTietHoaDon(
 )
 GO
 CREATE PROC ThemNhaCungCap(
-    @TenNhaCungCap VARCHAR(250),
+    @TenNhaCungCap NVARCHAR(250),
     @DiaChi TEXT,
     @SoDienThoai CHAR(15)
 )
@@ -68,8 +68,8 @@ BEGIN
 END
 GO
 CREATE PROC ThemKhachHang(
-    @HoKhachHang VARCHAR(50),
-    @TenKhachHang VARCHAR(50),
+    @HoKhachHang NVARCHAR(50),
+    @TenKhachHang NVARCHAR(50),
     @DiaChi TEXT,
     @SoDienThoai CHAR(15)
 )
@@ -79,11 +79,11 @@ BEGIN
 END
 GO
 CREATE PROC ThemNhanVien(
-    @HoNhanVien VARCHAR(50),
-    @TenNhanVien VARCHAR(50),
+    @HoNhanVien NVARCHAR(50),
+    @TenNhanVien NVARCHAR(50),
     @DiaChi TEXT,
     @SoDienThoai CHAR(15),
-    @ChucVu VARCHAR(20)
+    @ChucVu NVARCHAR(20)
 )
 AS
 BEGIN
@@ -91,14 +91,15 @@ BEGIN
 END
 GO
 CREATE PROC ThemNhacCu(
-    @TenNhacCu VARCHAR(100),
-    @LoaiNhacCu VARCHAR(100),
+    @TenNhacCu NVARCHAR(100),
+    @MaNhaCungCap INT,
+    @LoaiNhacCu NVARCHAR(100),
     @GiaTien INT,
     @SoLuongTonKho INT
 )
 AS
 BEGIN
-    INSERT INTO NhacCu(TenNhacCu, LoaiNhacCu, GiaTien, SoLuongTonKho) VALUES(@TenNhacCu, @LoaiNhacCu, @GiaTien, @SoLuongTonKho)
+    INSERT INTO NhacCu(TenNhacCu, MaNhaCungCap, LoaiNhacCu, GiaTien, SoLuongTonKho) VALUES(@TenNhacCu, @MaNhaCungCap, @LoaiNhacCu, @GiaTien, @SoLuongTonKho)
 END
 GO
 CREATE PROC ThemHoaDon(
@@ -173,7 +174,7 @@ END
 GO
 CREATE PROC SuaNhaCungCap(
     @MaNhaCungCap INT,
-    @TenNhaCungCap VARCHAR(250),
+    @TenNhaCungCap NVARCHAR(250),
     @DiaChi TEXT,
     @SoDienThoai CHAR(15)
 )
@@ -184,8 +185,8 @@ END
 GO
 CREATE PROC SuaKhachHang(
     @MaKhachHang INT,
-    @HoKhachHang VARCHAR(50),
-    @TenKhachHang VARCHAR(50),
+    @HoKhachHang NVARCHAR(50),
+    @TenKhachHang NVARCHAR(50),
     @DiaChi TEXT,
     @SoDienThoai CHAR(15)
 )
@@ -196,11 +197,11 @@ END
 GO
 CREATE PROC SuaNhanVien(
     @MaNhanVien INT,
-    @HoNhanVien VARCHAR(50),
-    @TenNhanVien VARCHAR(50),
+    @HoNhanVien NVARCHAR(50),
+    @TenNhanVien NVARCHAR(50),
     @DiaChi TEXT,
     @SoDienThoai CHAR(15),
-    @ChucVu VARCHAR(20)
+    @ChucVu NVARCHAR(20)
 )
 AS
 BEGIN
@@ -210,8 +211,8 @@ GO
 CREATE PROC SuaNhacCu(
     @MaNhacCu INT,
     @MaNhaCungCap INT,
-    @TenNhacCu VARCHAR(100),
-    @LoaiNhacCu VARCHAR(100),
+    @TenNhacCu NVARCHAR(100),
+    @LoaiNhacCu NVARCHAR(100),
     @GiaTien INT,
     @SoLuongTonKho INT
 )
@@ -293,7 +294,7 @@ BEGIN
 END
 GO
 CREATE PROC TimNhaCungCapTheoTen(
-    @TenNhaCungCap VARCHAR(250)
+    @TenNhaCungCap NVARCHAR(250)
 )
 AS
 BEGIN
@@ -301,7 +302,7 @@ BEGIN
 END
 GO
 CREATE PROC TimKhachHangTheoTen(
-    @TenKhachHang VARCHAR(50)
+    @TenKhachHang NVARCHAR(50)
 )
 AS
 BEGIN
@@ -309,7 +310,7 @@ BEGIN
 END
 GO
 CREATE PROC TimNhanVienTheoTen(
-    @TenNhanVien VARCHAR(50)
+    @TenNhanVien NVARCHAR(50)
 )
 AS
 BEGIN
@@ -317,7 +318,7 @@ BEGIN
 END
 GO
 CREATE PROC TimNhacCuTheoTen(
-    @TenNhacCu VARCHAR(100)
+    @TenNhacCu NVARCHAR(100)
 )
 AS
 BEGIN
@@ -325,7 +326,7 @@ BEGIN
 END
 GO
 CREATE PROC TimHoaDonTheoTen(
-    @TenKhachHang VARCHAR(50)
+    @TenKhachHang NVARCHAR(50)
 )
 AS
 BEGIN
@@ -333,7 +334,7 @@ BEGIN
 END
 GO
 CREATE PROC TimChiTietHoaDonTheoTen(
-    @TenNhacCu VARCHAR(100)
+    @TenNhacCu NVARCHAR(100)
 )
 AS
 BEGIN
@@ -539,4 +540,98 @@ GO
 ALTER ROLE Kho ADD MEMBER kho1
 GO
 ALTER ROLE Kho ADD MEMBER kho2
+GO
+EXEC ThemNhanVien
+    @HoNhanVien = N'Nguyễn Văn',
+    @TenNhanVien = N'An',
+    @DiaChi = N'Quận 1, TP.HCM',
+    @SoDienThoai = '0213424123',
+    @ChucVu = N'Nhân viên bán hàng'
+GO
+EXEC ThemNhanVien
+    @HoNhanVien = N'Nguyễn Thị',
+    @TenNhanVien = N'Bình',
+    @DiaChi = N'Quận 2, TP.HCM',
+    @SoDienThoai = '0912837462',
+    @ChucVu = N'Nhân viên kho'
+GO
+EXEC ThemNhanVien
+    @HoNhanVien = N'Trần Thị',
+    @TenNhanVien = N'Chung',
+    @DiaChi = N'Quận 3, TP.HCM',
+    @SoDienThoai = '0274937462',
+    @ChucVu = N'Nhân viên tuyển dụng'
+GO
+EXEC ThemKhachHang
+    @HoKhachHang = N'Lâm Minh',
+    @TenKhachHang = N'Hiếu',
+    @DiaChi = N'Quận 4, TP.HCM',
+    @SoDienThoai = '0462839471'
+GO
+EXEC ThemKhachHang
+    @HoKhachHang = N'Nguyễn Thị',
+    @TenKhachHang = N'Anh',
+    @DiaChi = N'Quận 5, TP.HCM',
+    @SoDienThoai = '023148273'
+GO
+EXEC ThemNhaCungCap
+    @TenNhaCungCap = N'Việt Thương',
+    @DiaChi = N'Quận 3, TP.HCM',
+    @SoDienThoai = '18006715'
+GO
+EXEC ThemNhaCungCap
+    @TenNhaCungCap = N'Tiến Đạt',
+    @DiaChi = N'Quận Bình Thạnh, TP.HCM',
+    @SoDienThoai = '0909015886'
+GO
+EXEC ThemNhacCu
+    @TenNhacCu = N'Suzuki SDG-6NL',
+    @MaNhaCungCap = 1,
+    @LoaiNhacCu = N'Đàn Guitar',
+    @GiaTien = 2500000,
+    @SoLuongTonKho = 10
+GO
+EXEC ThemNhacCu
+    @TenNhacCu = N'Yamaha YFL-222',
+    @MaNhaCungCap = 1,
+    @LoaiNhacCu = N'Kèn sáo',
+    @GiaTien = 3000000,
+    @SoLuongTonKho = 10
+GO
+EXEC ThemNhacCu
+    @TenNhacCu = N'Casio AP-470',
+    @MaNhaCungCap = 2,
+    @LoaiNhacCu = N'Piano',
+    @GiaTien = 30980000,
+    @SoLuongTonKho = 10
+GO
+EXEC ThemHoaDon
+    @MaNhanVien = 1,
+    @MaKhachHang = 1,
+    @TongTien = 5500000,
+    @NgayTao = '2021-05-01'
+GO
+EXEC ThemHoaDon
+    @MaNhanVien = 1,
+    @MaKhachHang = 2,
+    @TongTien = 30980000,
+    @NgayTao = '2021-05-02'
+GO
+EXEC ThemChiTietHoaDon
+    @MaHoaDon = 1,
+    @MaNhacCu = 1,
+    @SoLuong = 1,
+    @DonGia = 2500000
+GO
+EXEC ThemChiTietHoaDon
+    @MaHoaDon = 1,
+    @MaNhacCu = 2,
+    @SoLuong = 1,
+    @DonGia = 3000000
+GO
+EXEC ThemChiTietHoaDon
+    @MaHoaDon = 2,
+    @MaNhacCu = 3,
+    @SoLuong = 1,
+    @DonGia = 30980000
 GO
